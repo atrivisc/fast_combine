@@ -16,7 +16,6 @@ authors = [
 ]
 description = "A simple pyo3 rust library to recursively merge 2 dicts fast"
 readme = "README.md"
-requires-python = ">=3.12"
 license = { file = "LICENSE" }
 
 [project.urls]
