@@ -9,7 +9,7 @@ crate-type = ["cdylib"]
 
 [dependencies]
 indexmap = "2"
-pyo3 = { version = "0.28", features = ["auto-initialize"] }
+pyo3 = { version = "0.28" }
 
 [profile.release]
 lto           = true
