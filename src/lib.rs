@@ -17,11 +17,10 @@ mod fast_combine {
             let val_b = dict_b.get_item(&key)?;
             match result.get_item(&key)? {
                 Some(val_a) => {
-                    if let (Ok(sub_a), Ok(sub_b)) = (
-                        val_a.cast::<PyDict>(),
-                        val_b.cast::<PyDict>(),
-                    ) {
-                        let merged = merge_dicts(py, sub_a.as_mapping(), sub_b.as_mapping())?;
+                    if is_mergeable_mapping(val_a.as_any()) && is_mergeable_mapping(val_b.as_any()) {
+                        let sub_a = val_a.cast_into::<PyMapping>()?;
+                        let sub_b = val_b.cast_into::<PyMapping>()?;
+                        let merged = merge_dicts(py, &sub_a, &sub_b)?;
                         result.set_item(&key, merged)?;
                     } else {
                         result.set_item(&key, val_b)?;
@@ -32,7 +31,6 @@ mod fast_combine {
                 }
             }
         }
-
         Ok(result)
     }
 
@@ -74,7 +72,7 @@ mod fast_combine {
 #[cfg(test)]
 mod tests {
     use pyo3::prelude::*;
-    use pyo3::types::{PyDict, PyMapping, PyString, PyList, PyBytes, PyByteArray};    
+    use pyo3::types::PyDict;
     use crate::fast_combine::{merge_dicts, merge_dicts_into};
 
     fn setup() {
