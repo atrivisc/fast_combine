@@ -1,7 +1,7 @@
 #[pyo3::pymodule]
 mod fast_combine {
     use pyo3::prelude::*;
-    use pyo3::types::{PyDict, PyMapping, PyString, PyList};
+    use pyo3::types::{PyDict, PyMapping, PyString, PyList, PyBytes, PyByteArray};
 
     #[pyfunction]
     pub fn merge_dicts<'py>(
@@ -74,7 +74,7 @@ mod fast_combine {
 #[cfg(test)]
 mod tests {
     use pyo3::prelude::*;
-    use pyo3::types::PyDict;
+    use pyo3::types::{PyDict, PyMapping, PyString, PyList, PyBytes, PyByteArray};    
     use crate::fast_combine::{merge_dicts, merge_dicts_into};
 
     fn setup() {
