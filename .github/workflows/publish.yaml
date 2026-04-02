@@ -32,6 +32,18 @@ jobs:
       - name: Run Rust tests
         run: cargo test --release --verbose
 
+      - name: Build sdist
+        uses: PyO3/maturin-action@v1
+        with:
+          command: sdist
+          args: --out dist
+          
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sdist
+          path: dist
+          manylinux: auto
+
       - name: Build wheels
         uses: PyO3/maturin-action@v1
         with:
@@ -58,7 +70,13 @@ jobs:
           merge-multiple: true
           path: dist
 
+      - uses: actions/download-artifact@v4
+        with:
+          name: sdist
+          path: dist
+
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           verbose: true
+          attestations: false
