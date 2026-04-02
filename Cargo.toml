@@ -1,0 +1,17 @@
+[package]
+name    = "fast_combine"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name       = "fast_combine"
+crate-type = ["cdylib"]
+
+[dependencies]
+indexmap = "2"
+pyo3 = { version = "0.28", features = ["auto-initialize"] }
+
+[profile.release]
+lto           = true
+opt-level     = 3
+codegen-units = 1
