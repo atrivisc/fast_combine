@@ -1,6 +1,7 @@
 name: Publish to PyPI
 
 on:
+  workflow_dispatch:
   push:
     tags: ["v*"]
 
@@ -15,16 +16,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
+          cache: "pip"
+          cache-dependency-path: |
+            "requirements.txt"
 
-      - name: Test
-        uses: PyO3/maturin-action@v1
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
         with:
-          command: develop
-          manylinux: auto
-          args: --extras test 
+          toolchain: stable
+          components: rustfmt
+
+      - name: Run Rust tests
+        run: cargo test --release --verbose
 
       - name: Build wheels
         uses: PyO3/maturin-action@v1
