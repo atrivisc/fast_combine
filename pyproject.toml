@@ -4,10 +4,22 @@ build-backend = "maturin"
 
 [project]
 name    = "fast_combine"
-version = "0.1.2"
+version = "0.1.3"
 requires-python = ">=3.12"
 classifiers = [
     "Programming Language :: Rust",
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: Implementation :: PyPy",
 ]
+authors = [
+  { name="atrivisc", email="atrivisc.shawl130@passmail.com" },
+]
+description = "A simple pyo3 rust library to recursively merge 2 dicts fast"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { file = "LICENSE" }
+
+[project.urls]
+"Homepage" = "https://github.com/atrivisc/fast_combine"
+"Repository" = "https://github.com/atrivisc/fast_combine.git"
+"Bug Tracker" = "https://github.com/atrivisc/fast_combine/issues"
